@@ -7,7 +7,7 @@ Small [warp](https://crates.io/crates/warp) web service handler.
 Cargo:
 
 ```bash
-cargo install --git https://github.com/hrbrmstr/mepower --branch batman
+cargo install --git https://github.com/hrbrmstr/warpsvc --branch batman
 ```
 
 ## Building (release)
