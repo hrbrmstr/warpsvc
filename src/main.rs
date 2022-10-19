@@ -3,9 +3,26 @@ use warp::Filter;
 use cmpco::get_outages;
 
 async fn outage_info() -> Result<impl warp::Reply, Infallible> {
+
 	let outages = get_outages();
-	let res: Vec<String> = outages.await.into_iter().map(|outage| serde_json::to_string(&outage).unwrap()).collect();
-	Ok(warp::reply::with_header(res.join("\n"), "content-type", "application/json"))
+
+	let res: Vec<String> = outages.await
+	.into_iter().map(|outage| 
+		match serde_json::to_string(&outage) {
+			Ok(res) => res,
+			Err(_err) => String::from("{}")
+
+		}
+	).collect();
+
+	Ok(
+		warp::reply::with_header(
+			res.join("\n"), 
+			"content-type", 
+			"application/json"
+		)
+	)
+	
 }
 
 #[tokio::main]
